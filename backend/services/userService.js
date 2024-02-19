@@ -1,6 +1,7 @@
 const User = require("../models/UserModel");
 
 class UserService {
+
   createUser = async (user) => {
     const data = User.create(user);
     return data;
@@ -25,6 +26,10 @@ class UserService {
   getUser = (user) => {
     return User.findOne(user);
   };
+
+  getUserList = (query) => {
+
+  }
 }
 
 module.exports = new UserService();
