@@ -9,7 +9,7 @@ const routes = express.Router();
 routes.use(RequestHandler);
 
 routes.use("/auth", authRoutes(routes));
-routes.use("/rest", userRoutes(routes));
+routes.use("/rest/user", userRoutes(routes));
 
 routes.use(ResponseHandler);
 

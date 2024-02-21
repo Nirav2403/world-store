@@ -1,4 +1,5 @@
 const UserService = require("../services/userService");
+const { generateToken } = require("../utils/auth");
 
 class AuthController {
   createUser = async (req, res, next) => {
@@ -17,7 +18,9 @@ class AuthController {
         );
       }
 
-      const user = await UserService.createUser(data);
+      const token = generateToken(data);
+
+      const user = await UserService.createUser({ ...data, token });
 
       const resp = {
         message: "Signup successfully",
@@ -31,27 +34,27 @@ class AuthController {
   };
 
   loginUser = async (req, res, next) => {
-    const data = req.body;
-
-    const userDetails = await UserService.getUser({ email: data.email });
-
-    if (!userDetails) {
-      throw new Error("Provided email or password was incorrect");
-    }
-
-    const isValid = await UserService.isValidPassword(data);
-
-    if (!isValid) {
-      throw new Error("Provided email or password was incorrect");
-    }
-
-    const resp = {
-      message: "Login successfully",
-      data: userDetails,
-    };
-
-    next(resp);
     try {
+      const data = req.body;
+
+      const userDetails = await UserService.getUser({ email: data.email });
+
+      if (!userDetails) {
+        throw new Error("Provided email or password was incorrect");
+      }
+
+      const isValid = await UserService.isValidPassword(data);
+
+      if (!isValid) {
+        throw new Error("Provided email or password was incorrect");
+      }
+
+      const resp = {
+        message: "Login successfully",
+        data: userDetails,
+      };
+
+      next(resp);
     } catch (error) {
       next(error);
     }

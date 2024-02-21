@@ -8,6 +8,13 @@ const generateToken = (payload) => {
   });
 };
 
+const compareToken = (token, originToken) => {
+  const decodedToken = jwt.decode(token);
+  const decodedOriginToken = jwt.decode(originToken);
+  return JSON.stringify(decodedToken) === JSON.stringify(decodedOriginToken);
+};
+
 module.exports = {
   generateToken,
+  compareToken,
 };

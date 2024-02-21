@@ -36,8 +36,8 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["teacher", "student"],
-      default: "student",
+      enum: ["admin", "staff", "customer"],
+      default: "user",
     },
     active: {
       type: Boolean,
@@ -45,6 +45,10 @@ const UserSchema = new mongoose.Schema(
       select: false,
     },
     token: { type: String },
+    profile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User-profile",
+    },
   },
   {
     methods: {

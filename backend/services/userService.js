@@ -1,7 +1,7 @@
 const User = require("../models/UserModel");
+const APIFeatures = require("../utils/apiFeature");
 
 class UserService {
-
   createUser = async (user) => {
     const data = User.create(user);
     return data;
@@ -14,8 +14,13 @@ class UserService {
       .then((user) => user.correctPassword(password, user.password));
   };
 
-  getUsers = (user) => {
-    const data = User.find(user);
+  getUsers = async (queryString) => {
+    const query = User.find();
+    const users = new APIFeatures(query, queryString)
+      .paginate()
+      .sort()
+      .limitFields();
+    const data = await users.query;
     return data;
   };
 
@@ -23,13 +28,10 @@ class UserService {
     return User.findById(id);
   };
 
-  getUser = (user) => {
-    return User.findOne(user);
+  getUserProfile = async (token) => {
+    const user = await User.findOne({ token }).populate('profile').exec();
+    return user;
   };
-
-  getUserList = (query) => {
-
-  }
 }
 
 module.exports = new UserService();
