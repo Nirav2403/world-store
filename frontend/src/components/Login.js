@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const auth = localStorage.getItem("user");
+    const auth = localStorage.getItem("token");
     if (auth) {
       navigate("/");
     }
@@ -24,7 +24,7 @@ const Login = () => {
     });
     const data = await result.json();
     if (data.name) {
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("token", JSON.stringify(data));
 
       navigate("/");
     } else {

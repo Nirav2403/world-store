@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 
 const Nav = () => {
-  const auth = localStorage.getItem("user");
+  const auth = localStorage.getItem("token");
   const navigate = useNavigate();
 
   const handleLogout = () => {
