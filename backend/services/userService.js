@@ -29,7 +29,12 @@ class UserService {
   };
 
   getUserProfile = async (token) => {
-    const user = await User.findOne({ token }).populate('profile').exec();
+    const user = await User.findOne({ token }).populate("profile").exec();
+    return user;
+  };
+
+  getUser = async (data) => {
+    const user = await User.findOne(data);
     return user;
   };
 }

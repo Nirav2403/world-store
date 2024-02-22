@@ -1,5 +1,6 @@
 const _ = require("lodash");
 const Logger = require("./logger");
+const { StatusCodes } = require("http-status-codes");
 
 class CustomResponse {
   constructor() {
@@ -44,7 +45,10 @@ class CustomResponse {
   }
 
   sendSuccess(res, message, status) {
-    this.logger.log(`a request has been made and proccessed successfully at: ${new Date()}`,"info");
+    this.logger.log(
+      `a request has been made and proccessed successfully at: ${new Date()}`,
+      "info"
+    );
     return (data, globalData) => {
       if (_.isUndefined(status)) {
         status = 200;
@@ -60,15 +64,17 @@ class CustomResponse {
 
   sendError(req, res, error) {
     this.logger.log(
-      `error ,Error during processing request: ${`${req.protocol}://${req.get("host")}${req.originalUrl}`} details message:`,
+      `error ,Error during processing request: ${`${req.protocol}://${req.get(
+        "host"
+      )}${req.originalUrl}`} details message:`,
       "error"
     );
 
-    return res.status(error.status).json({
+    return res.status(error.status || 500).json({
       type: "error",
-      status: error.status,
-      message: error?.message,
-      error: error.error?.errors,
+      status: error.status || StatusCodes.INTERNAL_SERVER_ERROR,
+      message: error?.message || "Internal server error",
+      error: error?.errors,
     });
   }
 }

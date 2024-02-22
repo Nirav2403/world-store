@@ -27,8 +27,9 @@ class UserConroller {
       };
 
       next(resp);
-    } catch (e) {
-      CustomErrors(e, next, "Invalid User Id", "CastError");
+    } catch (error) {
+      error.message = "Invalid User Id";
+      CustomErrors(req, res, error, "CastError");
     }
   };
 
