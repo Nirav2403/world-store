@@ -8,7 +8,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {

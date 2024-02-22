@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/images/logo.png";
+import logo from "../../../assets/images/logo.png";
 
-const Nav = () => {
+const Header = () => {
   const auth = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -49,4 +49,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default Header;
